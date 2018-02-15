@@ -16,7 +16,7 @@ static const int CHANNEL_MIDI_DEVICE = 1;
 
 // Create a 'MIDI' object using MySettings bound to Serial1. On different Arduino-models you have
 // to change the Serial
-MIDI_CREATE_CUSTOM_INSTANCE(HardwareSerial, Serial1, MIDI, midi::DefaultSettings);
+MIDI_CREATE_CUSTOM_INSTANCE(HardwareSerial, Serial, MIDI, midi::DefaultSettings);
 
 
 /**
@@ -32,9 +32,9 @@ void setup() {
   MIDI.setHandleProgramChange(handlerProgramChange);
 
   // Monitoring activities on standard Serial Monitor
-  Serial.begin(9600);
-  Serial.println("MIDI Translator v0.1");
-  Serial.println("----------------------");
+  // Serial.begin(9600);
+  // Serial.println("MIDI Translator v0.1");
+  // Serial.println("----------------------");
 }
 
 
@@ -56,9 +56,9 @@ void loop() {
  */
 void handlerControlChange(byte channel, byte number, byte value) {
   // Log all incoming ControlChange messages...
-  char logstring[70];
-  sprintf (logstring, "ControlChange received! CH #%02u  CC #%03u  VAL #%03u", channel, number, value);
-  Serial.println(logstring);
+  // char logstring[70];
+  // sprintf (logstring, "ControlChange received! CH #%02u  CC #%03u  VAL #%03u", channel, number, value);
+  // Serial.println(logstring);
   // ...and send them back to MIDI-Out without translating or filtering!
   MIDI.sendControlChange(number, value, channel);
 }
@@ -76,34 +76,34 @@ void handlerControlChange(byte channel, byte number, byte value) {
  */
 void handlerProgramChange(byte channel, byte number) {
   // Log all incoming ProgramChange messages...
-  char logstring[70];
-  sprintf (logstring, "ProgramChange received! CH #%02u  PC #%03u received!", channel, number);
-  Serial.println(logstring);
+  // char logstring[70];
+  // sprintf (logstring, "ProgramChange received! CH #%02u  PC #%03u received!", channel, number);
+  // Serial.println(logstring);
 
   // Do the translation-stuff...
   if (number == 0) {
     // Switch to scene 1
-    Serial.println("Switch to Axe-FX Scene 1");
+    // Serial.println("Switch to Axe-FX Scene 1");
     MIDI.sendControlChange(34, 0, CHANNEL_MIDI_DEVICE);
     
   } else if (number == 1) {
     // Switch to scene 2
-    Serial.println("Switch to Axe-FX Scene 2");
+    // Serial.println("Switch to Axe-FX Scene 2");
     MIDI.sendControlChange(34, 1, CHANNEL_MIDI_DEVICE);
     
   }  else if (number == 2) {
     // Switch to scene 3
-    Serial.println("Switch to Axe-FX Scene 3");
+    // Serial.println("Switch to Axe-FX Scene 3");
     MIDI.sendControlChange(34, 2, CHANNEL_MIDI_DEVICE);
     
   }  else if (number == 3) {
     // Switch to scene 4
-    Serial.println("Switch to Axe-FX Scene 4");
+    // Serial.println("Switch to Axe-FX Scene 4");
     MIDI.sendControlChange(34, 3, CHANNEL_MIDI_DEVICE);
     
   }  else if (number == 4) {
     // Switch to scene 5
-    Serial.println("Switch to Axe-FX Scene 5");
+    // Serial.println("Switch to Axe-FX Scene 5");
     MIDI.sendControlChange(34, 4, CHANNEL_MIDI_DEVICE);
     
   } else {
